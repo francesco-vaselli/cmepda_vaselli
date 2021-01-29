@@ -60,9 +60,11 @@ if __name__ == '__main__':
     auc1 = {}
     plt.figure()
     for i, label in enumerate(labels):
-        fpr[label], tpr[label], threshold = roc_curve(y_test[:, i], predictions[:, i])
+        fpr[label], tpr[label], threshold = roc_curve(y_test[:, i],
+                                                      predictions[:, i])
         auc1[label] = auc(fpr[label], tpr[label])
-        plt.plot(fpr[label], tpr[label], label='%s tagger, auc = %.1f%%'%(label,auc1[label]*100.))
+        plt.plot(fpr[label], tpr[label],
+                 label='%s tagger, auc=%.1f%%'%(label, auc1[label]*100.))
         # plt.semilogx()
         plt.title('ROC Curve')
         plt.xlabel("FPR")
