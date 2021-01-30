@@ -53,7 +53,7 @@ def assign_labels_dict(dict, file_path):
     """
     # retrive ground truth from mc
     hdu = fits.open(file_path)
-    ground_truth = hdu['MONTE_CARLO'].data['ABS_Z']
+    ground_truth = np.array(hdu['MONTE_CARLO'].data['ABS_Z'], dtype=np.float64)
 
     # create zero-valued columns for onehot encoding of ground_truth
     dict['window'] = np.zeros(len(dict[list(dict.keys())[0]]))
@@ -66,12 +66,12 @@ def assign_labels_dict(dict, file_path):
 
     # set corresponding label according to ABS_Z treshold
     for i in range(0, len(dict[list(dict.keys())[0]])):
-        if ground_truth[i] <= 1.2:
-            dict['window'][i] = 1
-            window_counter += 1
-        elif ground_truth[i] >= 10.4:
+        if ground_truth[i] <= 0.86:
             dict['gem'][i] = 1
             gem_counter += 1
+        elif ground_truth[i] >= 10.8:
+            dict['window'][i] = 1
+            window_counter += 1
         else:
             dict['gas'][i] = 1
             gas_counter += 1
@@ -127,12 +127,12 @@ def assign_labels_dict_numba(dict, file_path):
 def numba_compare(ground_truth, window, gas, gem, counter):
 
     for i in range(ground_truth.size):
-        if ground_truth[i] <= 1.2:
-            window[i] = 1
-            counter[0] += 1
-        elif ground_truth[i] >= 10.4:
+        if ground_truth[i] <= 0.8:
             gem[i] = 1
             counter[2] += 1
+        elif ground_truth[i] >= 10.8:
+            window[i] = 1
+            counter[0] += 1
         else:
             gas[i] = 1
             counter[1] += 1
@@ -145,7 +145,7 @@ def wrapper(func, *args, **kwargs):
 
     Parameters
     ----------
-    func : user defind function
+    func : user defined function
         Description of parameter `func`.
     *args : type
         Description of parameter `*args`.
@@ -165,17 +165,19 @@ def wrapper(func, *args, **kwargs):
 
 if __name__ == '__main__':
 
-    dict = extract_features('/home/francesco/Documents/lm/cm/project/cmepda-vaselli/misc/sim_recon.fits')
+    dict = extract_features('/home/francesco/Documents/lm/cm/project/data/flat_rnd0_recon.fits')
 
 # timing of functions to compare methods
     """
-    wrap_dict = wrapper(assign_labels_dict, dict, '/home/francesco/Documents/lm/cm/project/cmepda-vaselli/misc/sim_recon.fits')
-    wrap_numba = wrapper(assign_labels_dict_numba, dict, '/home/francesco/Documents/lm/cm/project/cmepda-vaselli/misc/sim_recon.fits')
+    wrap_dict = wrapper(assign_labels_dict, dict,
+    '/home/francesco/Documents/lm/cm/project/cmepda-vaselli/misc/sim_recon.fits')
+    wrap_numba = wrapper(assign_labels_dict_numba, dict,
+    '/home/francesco/Documents/lm/cm/project/cmepda-vaselli/misc/sim_recon.fits')
     print(timeit.timeit(wrap_dict, number=1))
     print(timeit.timeit(wrap_numba, number=1))
     """
 
-    df = assign_labels_dict(dict, '/home/francesco/Documents/lm/cm/project/cmepda-vaselli/misc/sim_recon.fits')
+    df = assign_labels_dict(dict, '/home/francesco/Documents/lm/cm/project/data/flat_rnd0_recon.fits')
     print(df.info())
     print(df.iloc[1])
-    df.to_csv('data.csv', index=False)
+    df.to_csv('data_flat_rnd0_recon.csv', index=False)
