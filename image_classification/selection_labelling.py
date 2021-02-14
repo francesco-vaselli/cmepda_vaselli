@@ -1,6 +1,5 @@
 # extract images from dataset
 import numpy as np
-import matplotlib.pyplot as plt
 from astropy.io import fits
 import pandas as pd
 
@@ -93,29 +92,18 @@ def extract_features(file_path):
     assert np.array_equal(num_cols * num_rows, roi_size)
     pha = events_data['PIX_PHAS']
     images = []
-    longest_col = 0
-    longest_row = 0
 
     for i, event in enumerate(pha):
         a = np.array(pha[i].reshape(num_rows[i], num_cols[i]), dtype=np.uint8)
         images.append(a)
-        if num_cols[i] >= longest_col:
-            longest_col = num_cols[i]
-        if num_rows[i] >= longest_row:
-            longest_row = num_rows[i]
 
     dict['images'] = images
-    return dict, longest_col, longest_row
+    return dict
 
 
 if __name__ == '__main__':
 
-    dict, col, row = extract_features('/home/francesco/Documents/lm/cm/project/data/flat_rnd1.fits')
-    df = assign_labels_dict(dict, '/home/francesco/Documents/lm/cm/project/data/flat_rnd1.fits')
-    images = df['images'].values
-    B = images[23599]
-    A = np.zeros((102, 102), dtype=int)
-    x_displ = np.int(np.rint((A.shape[0]-B.shape[0])/2))
-    y_displ = np.int(np.rint((A.shape[1]-B.shape[1])/2))
-    A[x_displ:x_displ+B.shape[0], y_displ:y_displ+B.shape[1]] += B
-    plt.imshow(B)
+    dict = extract_features('/home/francesco/Documents/lm/cm/project/data/flat_rnd0.fits')
+    df = assign_labels_dict(dict, '/home/francesco/Documents/lm/cm/project/data/flat_rnd0.fits')
+    # save to file with pkl protocol=4 for colab compatibility
+    df.to_pickle('im_data_flat_rnd0.pkl', protocol=4)
