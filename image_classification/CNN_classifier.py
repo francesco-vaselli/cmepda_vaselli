@@ -1,12 +1,11 @@
+import numpy as np
 import pandas as pd
-import glob
-import os
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_curve, auc
 import tensorflow as tf
 from tensorflow.keras import layers, models
-import numpy as np
 
 
 if __name__ == '__main__':
@@ -37,23 +36,34 @@ if __name__ == '__main__':
         y_displ = np.int(np.rint((X[i].shape[1]-fig.shape[1])/2))
         X[i, x_displ:x_displ+fig.shape[0], y_displ:y_displ+fig.shape[1], 0] += fig
 
-    # take only small part of data given memory limit
-    # X = X[0:40000]
-    # y = y[0:40000]
+    # scale images features in range(0, 1)
+    scaler = MinMaxScaler((0, 1))
+    X = scaler.fit_transform(X.reshape(-1, X.shape[-1])).reshape(X.shape)
 
     # split train and test(0.05) (random seed not fixed...)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
 
     model = models.Sequential()
-    model.add(layers.Conv2D(32, (3, 3), activation='relu',
-                            input_shape=(max_row, max_col, 1)))
-    model.add(layers.MaxPooling2D((2, 2)))
-    model.add(layers.Dropout(0.15))
+    model.add(layers.Conv2D(64, (3, 3), activation='relu',
+              input_shape=(max_row, max_col, 1)))
     model.add(layers.Conv2D(64, (3, 3), activation='relu'))
     model.add(layers.MaxPooling2D((2, 2)))
-    model.add(layers.Dropout(0.15))
+    model.add(layers.Dropout(0.05))
+    model.add(layers.Conv2D(64, (3, 3), activation='relu', padding='same'))
+    model.add(layers.Conv2D(64, (3, 3), activation='relu', padding='same'))
+    model.add(layers.Conv2D(64, (3, 3), activation='relu', padding='same'))
+    model.add(layers.MaxPooling2D((2, 2)))
+    model.add(layers.Dropout(0.05))
+    model.add(layers.Conv2D(64, (3, 3), activation='relu', padding='same'))
+    model.add(layers.Conv2D(64, (3, 3), activation='relu', padding='same'))
+    model.add(layers.Conv2D(64, (3, 3), activation='relu', padding='same'))
+    model.add(layers.MaxPooling2D((2, 2)))
+    model.add(layers.Dropout(0.05))
     model.add(layers.Conv2D(64, (3, 3), activation='relu'))
+
     model.add(layers.Flatten())
+    model.add(layers.Dense(256, activation='relu'))
+    model.add(layers.Dense(128, activation='relu'))
     model.add(layers.Dense(64, activation='relu'))
     model.add(layers.Dense(32, activation='relu'))
     model.add(layers.Dense(3, activation='softmax'))
