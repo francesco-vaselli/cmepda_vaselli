@@ -8,6 +8,40 @@ import tensorflow as tf
 from tensorflow.keras import layers, models
 
 
+def images_mapping(images):
+    """utility function to map images into greatest one to use as input
+
+    Parameters
+    ----------
+    images : np.array of objects, containing matrices of different shapes
+
+    Returns
+    -------
+    X : np.array of float32
+        array of 1-channel images of dimensions max_row, max_col, 1
+
+    """
+
+    # get max dimensions for figures
+    max_col = 0
+    max_row = 0
+    for i, j in enumerate(images):
+        if images[i].shape[0] >= max_row:
+            max_row = images[i].shape[0]
+        if images[i].shape[1] >= max_col:
+            max_col = images[i].shape[1]
+
+    X = np.zeros((len(y), max_row, max_col, 1), dtype=np.float32)
+
+    # map images into greatest one to use as input
+    for i, fig in enumerate(images):
+        x_displ = np.int(np.rint((X[i].shape[0]-fig.shape[0])/2))
+        y_displ = np.int(np.rint((X[i].shape[1]-fig.shape[1])/2))
+        X[i, x_displ:x_displ+fig.shape[0], y_displ:y_displ+fig.shape[1], 0] += fig
+
+    return X
+
+
 if __name__ == '__main__':
 
     # check for CUDA device on local machine
@@ -18,23 +52,9 @@ if __name__ == '__main__':
     data = init_data[init_data['energy_label'] == 1]
 
     images = data['images'].values
-    # get max dimensions for figures
-    max_col = 0
-    max_row = 0
-    for i, j in enumerate(images):
-        if images[i].shape[0] >= max_row:
-            max_row = images[i].shape[0]
-        if images[i].shape[1] >= max_col:
-            max_col = images[i].shape[1]
 
     y = np.array(data[['window', 'gas', 'gem']].values, dtype=np.float32)
-    X = np.zeros((len(images), max_row, max_col, 1), dtype=np.float32)
-
-    # reshape images for input
-    for i, fig in enumerate(images):
-        x_displ = np.int(np.rint((X[i].shape[0]-fig.shape[0])/2))
-        y_displ = np.int(np.rint((X[i].shape[1]-fig.shape[1])/2))
-        X[i, x_displ:x_displ+fig.shape[0], y_displ:y_displ+fig.shape[1], 0] += fig
+    X = images_mapping(images)
 
     # scale images features in range(0, 1)
     scaler = MinMaxScaler((0, 1))
