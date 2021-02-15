@@ -8,7 +8,7 @@ Installation/Usage:
 
 As the package has not been published on PyPi (yet ;-) ), it CANNOT be installed using pip.
 
-Search for device, connect and read characteristic
+Code example
 **************************************************
 .. code-block:: python
 
