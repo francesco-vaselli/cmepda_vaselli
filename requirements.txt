@@ -1,1 +1,6 @@
 numpy>=1.16.5
+pandas
+tensorflow
+sklearn
+matplotlib
+astropy
