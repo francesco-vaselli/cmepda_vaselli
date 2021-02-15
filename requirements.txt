@@ -5,4 +5,4 @@ sklearn
 matplotlib
 astropy
 sphinx==3.4.3
-sphinx_rtd_theme
+sphinx_rtd_theme==0.5.0
