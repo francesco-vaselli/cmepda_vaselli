@@ -43,7 +43,7 @@ if __name__ == '__main__':
                   metrics=['accuracy'])
 
     history = model.fit(X_train, y_train, validation_split=0.05,
-                        batch_size=32, epochs=10)
+                        batch_size=256, epochs=10)
 
     # show loss and accuracy
     print(history.history.keys())
