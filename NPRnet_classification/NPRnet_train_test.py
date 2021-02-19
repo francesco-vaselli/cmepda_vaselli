@@ -7,7 +7,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_curve, auc
 import tensorflow as tf
-from image_classification.images_mapping import images_mapping
+from images_mapping import images_mapping
 from NPRnet_model import NPRnet
 
 
