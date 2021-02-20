@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_curve, auc
 import tensorflow as tf
+from plot_roc import plot_roc
 
 
 if __name__ == '__main__':
@@ -54,24 +55,8 @@ if __name__ == '__main__':
     score = model.evaluate(X_test, y_test, verbose=0)
     print(f'Test loss: {score[0]} / Test accuracy: {score[1]}')
 
-    labels = ['window', 'gas', 'gem']
-    fpr = {}
-    tpr = {}
-    auc1 = {}
-    plt.figure()
-    for i, label in enumerate(labels):
-        fpr[label], tpr[label], threshold = roc_curve(y_test[:, i],
-                                                      predictions[:, i])
-        auc1[label] = auc(fpr[label], tpr[label])
-        plt.plot(fpr[label], tpr[label],
-                 label='%s tagger, auc=%.1f%%'%(label, auc1[label]*100.))
-        # plt.semilogx()
-        plt.title('ROC Curve')
-        plt.xlabel("FPR")
-        plt.ylabel("TPR")
-        plt.ylim(0.001,1)
-        plt.grid(True)
-        plt.legend(loc='lower right')
+    fig = plot_roc(y_test, predictions)
+    plt.title('ROC Curve')
 
     # plt.savefig('%s/ROC.pdf'%(options.outputDir))
     plt.show()

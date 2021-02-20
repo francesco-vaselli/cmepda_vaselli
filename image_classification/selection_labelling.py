@@ -1,4 +1,5 @@
-# extract images from dataset
+''' extract images from dataset
+'''
 import numpy as np
 from astropy.io import fits
 import pandas as pd
@@ -103,7 +104,7 @@ def extract_features(file_path):
 
 if __name__ == '__main__':
 
-    dict = extract_features('/home/francesco/Documents/lm/cm/project/data/flat_rnd0.fits')
-    df = assign_labels_dict(dict, '/home/francesco/Documents/lm/cm/project/data/flat_rnd0.fits')
+    dict = extract_features('/home/francesco/Documents/lm/cm/project/data/flat_rnd14.fits')
+    df = assign_labels_dict(dict, '/home/francesco/Documents/lm/cm/project/data/flat_rnd14.fits')
     # save to file with pkl protocol=4 for colab compatibility
-    df.to_pickle('im_data_flat_rnd0.pkl', protocol=4)
+    df.to_pickle('im_data_flat_rnd14.pkl', protocol=4)

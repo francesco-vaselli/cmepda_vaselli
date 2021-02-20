@@ -9,6 +9,7 @@ from sklearn.metrics import roc_curve, auc
 import tensorflow as tf
 from images_mapping import images_mapping
 from NPRnet_model import NPRnet
+from plot_roc import plot_roc
 
 
 if __name__ == '__main__':
@@ -62,25 +63,8 @@ if __name__ == '__main__':
     print(f'Test loss: {score[0]} / Test accuracy: {score[1]}')
 
     predictions = model.predict(X_test)
-    labels = ['window', 'gas', 'gem']
-    fpr = {}
-    tpr = {}
-    auc1 = {}
-
-    plt.figure()
-    for i, label in enumerate(labels):
-        fpr[label], tpr[label], threshold = roc_curve(y_test[:, i],
-                                                      predictions[:, i])
-        auc1[label] = auc(fpr[label], tpr[label])
-        plt.plot(fpr[label], tpr[label],
-                 label='%s tagger, auc=%.1f%%' % (label, auc1[label]*100.))
-        # plt.semilogx()
-        plt.title(f'ROC Curve for energy bin {bin_num} (CNN)')
-        plt.xlabel("FPR")
-        plt.ylabel("TPR")
-        plt.ylim(0.001, 1)
-        plt.grid(True)
-        plt.legend(loc='lower right')
+    fig = plot_roc(y_test, predictions)
+    plt.title(f'ROC Curve for energy bin {bin_num}')
 
     # plt.savefig('%s/ROC.pdf'%(options.outputDir))
     plt.show()
