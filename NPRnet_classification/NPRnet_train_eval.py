@@ -18,7 +18,8 @@ if __name__ == '__main__':
     # load data
     init_data = pd.read_pickle('/home/francesco/Documents/lm/cm/project/cmepda-vaselli/image_classification/im_data_flat_rnd0.pkl')
     # only select energy bin 1 (4-8.9 keV)
-    data = init_data[init_data['energy_label'] == 1]
+    bin_num = 1
+    data = init_data[init_data['energy_label'] == bin_num]
 
     images = data['images'].values
 
@@ -74,7 +75,7 @@ if __name__ == '__main__':
         plt.plot(fpr[label], tpr[label],
                  label='%s tagger, auc=%.1f%%' % (label, auc1[label]*100.))
         # plt.semilogx()
-        plt.title('ROC Curve for energy bin 1 (CNN)')
+        plt.title(f'ROC Curve for energy bin {bin_num} (CNN)')
         plt.xlabel("FPR")
         plt.ylabel("TPR")
         plt.ylim(0.001, 1)

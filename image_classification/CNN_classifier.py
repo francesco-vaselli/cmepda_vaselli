@@ -15,8 +15,9 @@ if __name__ == '__main__':
     # tf.config.experimental.list_physical_devices('GPU')
     # load data
     init_data = pd.read_pickle('im_data_flat_rnd0.pkl')
-    # only select energy bin 1 (4-8.9 keV)
-    data = init_data[init_data['energy_label'] == 1]
+    # only select energy bin a specific energy bin
+    bin_num = 1
+    data = init_data[init_data['energy_label'] == bin_num]
 
     images = data['images'].values
 
@@ -32,7 +33,7 @@ if __name__ == '__main__':
 
     model = models.Sequential()
     model.add(layers.Conv2D(64, (3, 3), activation='relu',
-              input_shape=(max_row, max_col, 1)))
+              input_shape=(X.shape[1], X.shape[2], 1)))
     model.add(layers.Conv2D(64, (3, 3), activation='relu'))
     model.add(layers.MaxPooling2D((2, 2)))
     model.add(layers.Dropout(0.05))
@@ -48,6 +49,7 @@ if __name__ == '__main__':
     model.add(layers.Dropout(0.05))
     model.add(layers.Conv2D(64, (3, 3), activation='relu'))
 
+    model.add(layers.GlobalAveragePooling2D())
     model.add(layers.Flatten())
     model.add(layers.Dense(256, activation='relu'))
     model.add(layers.Dense(128, activation='relu'))
@@ -64,7 +66,7 @@ if __name__ == '__main__':
                   metrics=['accuracy'])
 
     history = model.fit(X_train, y_train, validation_split=0.05,
-                        batch_size=32, epochs=10)
+                        batch_size=256, epochs=10)
 
     # show loss and accuracy
     print(history.history.keys())
@@ -95,7 +97,7 @@ if __name__ == '__main__':
         plt.plot(fpr[label], tpr[label],
                  label='%s tagger, auc=%.1f%%' % (label, auc1[label]*100.))
         # plt.semilogx()
-        plt.title('ROC Curve for energy bin 1 (CNN)')
+        plt.title(f'ROC Curve for energy bin {bin_num} (CNN)')
         plt.xlabel("FPR")
         plt.ylabel("TPR")
         plt.ylim(0.001, 1)

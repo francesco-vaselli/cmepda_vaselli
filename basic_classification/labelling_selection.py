@@ -54,11 +54,13 @@ def assign_labels_dict(dict, file_path):
     # retrive ground truth from mc
     hdu = fits.open(file_path)
     ground_truth = np.array(hdu['MONTE_CARLO'].data['ABS_Z'], dtype=np.float64)
+    energy = np.array(hdu['MONTE_CARLO'].data['ENERGY'], dtype=np.float64)
 
     # create zero-valued columns for onehot encoding of ground_truth
     dict['window'] = np.zeros(len(dict[list(dict.keys())[0]]))
     dict['gas'] = np.zeros(len(dict[list(dict.keys())[0]]))
     dict['gem'] = np.zeros(len(dict[list(dict.keys())[0]]))
+    dict['energy_label'] = np.zeros(len(dict[list(dict.keys())[0]]))
 
     window_counter = 0
     gas_counter = 0
@@ -75,6 +77,12 @@ def assign_labels_dict(dict, file_path):
         else:
             dict['gas'][i] = 1
             gas_counter += 1
+
+    for i in range(0, len(dict[list(dict.keys())[0]])):
+        if energy[i] <= 8.9 and energy[i] >= 4.0:
+            dict['energy_label'][i] = 1
+        elif energy[i] >= 8.9:
+            dict['energy_label'][i] = 2
 
     print(f'Absorbed in window = {window_counter}, in gas = {gas_counter},' +
           f' in gem = {gem_counter}')
@@ -165,9 +173,9 @@ def wrapper(func, *args, **kwargs):
 
 if __name__ == '__main__':
 
-    dict = extract_features('/home/francesco/Documents/lm/cm/project/data/flat_rnd0_recon.fits')
+    dict = extract_features('/home/francesco/Documents/lm/cm/project/data/flat_rnd1_recon.fits')
 
-# timing of functions to compare methods
+    # timing of functions to compare methods
     """
     wrap_dict = wrapper(assign_labels_dict, dict,
     '/home/francesco/Documents/lm/cm/project/cmepda-vaselli/misc/sim_recon.fits')
@@ -177,7 +185,6 @@ if __name__ == '__main__':
     print(timeit.timeit(wrap_numba, number=1))
     """
 
-    df = assign_labels_dict(dict, '/home/francesco/Documents/lm/cm/project/data/flat_rnd0_recon.fits')
+    df = assign_labels_dict(dict, '/home/francesco/Documents/lm/cm/project/data/flat_rnd1_recon.fits')
     print(df.info())
-    print(df.iloc[1])
-    df.to_csv('data_flat_rnd0_recon.csv', index=False)
+    df.to_csv('data_test.csv', index=False)
