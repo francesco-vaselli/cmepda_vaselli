@@ -16,6 +16,7 @@ if __name__ == '__main__':
 
     # check for CUDA device on local machine
     # tf.config.experimental.list_physical_devices('GPU')
+
     # load data
     init_data = pd.read_pickle('/home/francesco/Documents/lm/cm/project/cmepda-vaselli/image_classification/im_data_flat_rnd0.pkl')
     # only select energy bin 1 (4-8.9 keV)
@@ -23,17 +24,18 @@ if __name__ == '__main__':
     data = init_data[init_data['energy_label'] == bin_num]
 
     images = data['images'].values
-
-    y = np.array(data[['window', 'gas', 'gem']].values, dtype=np.float32)
     X = images_mapping(images)
+    y = np.array(data[['window', 'gas', 'gem']].values, dtype=np.float32)
 
-    # scale images features in range(0, 1)
+    # scale images features in range (0, 1)
     scaler = MinMaxScaler((0, 1))
     X = scaler.fit_transform(X.reshape(-1, X.shape[-1])).reshape(X.shape)
 
-    # split train and test(0.05) (random seed not fixed...)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
+    # split train and test(0.05)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1,
+                                                        random_state=42)
 
+    # define model, compile and train
     model = NPRnet()
 
     model.compile(optimizer='adam',
@@ -56,7 +58,7 @@ if __name__ == '__main__':
     plt.title('Accuracy')
     plt.show()
 
-    # evaluate model on test
+    # evaluate model on test and plot roc curve
     score = model.evaluate(X_test, y_test, verbose=0)
     print(f'Test loss: {score[0]} / Test accuracy: {score[1]}')
 

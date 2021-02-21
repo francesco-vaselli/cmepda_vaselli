@@ -10,7 +10,8 @@ from tensorflow.keras import Model
 class NPRnet(Model):
     """A toy model inspired by ResNet (arXiv:1512.03385)
     named NanoPixieResNet (NPRnet) as it is a smaller version of the
-    aforementioned model, supposed to work on images extracted from pixels readouts.
+    aforementioned model, supposed to work on images extracted
+    from pixels readouts.
     Inherits from tensorflow Model class.
 
     Attributes
@@ -40,7 +41,6 @@ class NPRnet(Model):
     glob_pooling : tensorflow.keras.layers.GlobalAveragePooling2D
         Global Average Pooling is a pooling operation designed to replace fully
         connected layers in classical CNNs.
-
 
     d1 : tensorflow.keras.layers.Dense
 

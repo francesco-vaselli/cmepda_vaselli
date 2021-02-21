@@ -1,11 +1,11 @@
-'''utility function to plot and show roc curves
+'''utility function to compute and plot roc curves
 '''
 import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve, auc
 
 
 def plot_roc(y_test, predictions):
-    """utility function to plot and show roc curves for the different classes
+    """utility function to compute and plot roc curves for the different classes
 
     Parameters
     ----------

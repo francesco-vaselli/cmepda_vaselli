@@ -17,9 +17,9 @@ if __name__ == '__main__':
     X = (data.drop(columns=['window', 'gas', 'gem'])).values
 
     # split train and test(0.05) (random seed not fixed...)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.05)
-
-    # define NN model
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.05,
+                                                        random_state=42)
+    # define NN model, compile and train
     model = tf.keras.Sequential([
                                 tf.keras.layers.Flatten(input_shape=(9, )),
                                 tf.keras.layers.Dense(64, activation='relu'),
@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
     model.summary()
     # train
-    history = model.fit(X_train, y_train, validation_split=0.05, epochs=2)
+    history = model.fit(X_train, y_train, validation_split=0.05, epochs=10)
 
     # show loss and accuracy
     print(history.history.keys())
@@ -51,7 +51,8 @@ if __name__ == '__main__':
 
     # predict values for roc plotting
     predictions = model.predict(X_test)
-    # evaluate model on test
+
+    # evaluate model on test and plot roc curve
     score = model.evaluate(X_test, y_test, verbose=0)
     print(f'Test loss: {score[0]} / Test accuracy: {score[1]}')
 

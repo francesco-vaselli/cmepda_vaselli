@@ -1,3 +1,5 @@
+''' simple test of the images_mapping func
+'''
 import unittest
 import numpy as np
 from cmepda_vaselli.utils.images_mapping import images_mapping
@@ -5,7 +7,7 @@ from cmepda_vaselli.utils.images_mapping import images_mapping
 
 class Tests(unittest.TestCase):
     '''
-    Unittest for data preprocessing
+    Unittest for data preprocessing (images_mapping func)
     '''
     def test_matrices_scaling(self):
         '''

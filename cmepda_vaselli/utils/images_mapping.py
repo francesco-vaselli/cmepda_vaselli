@@ -8,12 +8,13 @@ def images_mapping(images):
 
     Parameters
     ----------
-    images : np.array of objects, containing matrices of different shapes
+    images : np.array of objects
+        containing matrices of different shapes i, j
 
     Returns
     -------
     X : np.array of float32
-        array of 1-channel images of dimensions max_row, max_col, 1
+        array of images of shape [len(images), max_row, max_col, 1]
 
     """
 
