@@ -9,21 +9,15 @@ def assign_labels_dict(dict, file_path):
     """Assign one-hot encoded labels for three types of events
         (assuming one-to-one correspondence between events and monte carlo)
 
-    Parameters
-    ----------
-    dict : dictionary
-        the reconstructed features dictionary
-    file_path : string
-        file path for database of reconstructed events in fits format
-
-
-    Returns
-    -------
-    df : Pandas DataFrame
-        DataFrame with 3 additional columns containing onehot labels
-        and 1 containing the energy bin
+    :param dictionary dict: the reconstructed features dictionary
+    :param string file_path: file path for database of reconstructed events in
+                             fits format
+    :return: DataFrame with 3 additional columns containing onehot labels
+             and 1 containing the energy bin
+    :rtype: Pandas DataFrame
 
     """
+
     # retrive ground truth from mc
     hdu = fits.open(file_path)
     ground_truth = np.array(hdu['MONTE_CARLO'].data['ABS_Z'], dtype=np.float64)
@@ -66,15 +60,10 @@ def assign_labels_dict(dict, file_path):
 def extract_features(file_path):
     """Extract relevant features and create dictionary for successive labelling
 
-    Parameters
-    ----------
-    file_path : string
-        file path for database of reconstructed events in fits format
-
-    Returns
-    -------
-    dict : dictionary
-        The dictionary of relevant features
+    :param string file_path: file path for database of reconstructed events in
+                             fits format
+    :return: The dictionary of relevant features
+    :rtype: dictionary
 
     """
 

@@ -6,18 +6,12 @@ import numpy as np
 def images_mapping(images):
     """utility function to map images into greatest one to use as input
 
-    Parameters
-    ----------
-    images : np.array of objects
-        containing matrices of different shapes i, j
-
-    Returns
-    -------
-    X : np.array of float32
-        array of images of shape [len(images), max_row, max_col, 1]
+    :param images: containing matrices of different shapes i, j
+    :type images: np.array of objects
+    :return: array of images of shape [len(images), max_row, max_col, 1]
+    :rtype: np.array of float32
 
     """
-
     # get max dimensions for figures
     max_col = 0
     max_row = 0

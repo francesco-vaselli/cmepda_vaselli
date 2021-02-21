@@ -10,15 +10,10 @@ from numba import jit
 def extract_features(file_path):
     """Extract relevant features and create dictionary for successive labelling
 
-    Parameters
-    ----------
-    file_path : string
-        file path for database of reconstructed events in fits format
-
-    Returns
-    -------
-    dict : dictionary
-        The dictionary of relevant features
+    :param string file_path: file path for database of reconstructed events in
+                             fits format
+    :return: The dictionary of relevant features
+    :rtype: dictionary
 
     """
 
@@ -39,18 +34,12 @@ def assign_labels_dict(dict, file_path):
     """Assign one-hot encoded labels for three types of events
         (assuming one-to-one correspondence between events and monte carlo)
 
-    Parameters
-    ----------
-    dict : dictionary
-        the reconstructed features dictionary
-    file_path : string
-        file path for database of reconstructed events in fits format
-
-
-    Returns
-    -------
-    df : Pandas DataFrame
-        DataFrame with 3 additional columns containing onehot labels
+    :param dictionary dict: the reconstructed features dictionary
+    :param string file_path: file path for database of reconstructed events in
+                             fits format
+    :return: DataFrame with 3 additional columns containing onehot labels
+             and 1 containing the energy bin
+    :rtype: Pandas DataFrame
 
     """
     # retrive ground truth from mc
@@ -93,24 +82,10 @@ def assign_labels_dict(dict, file_path):
 
 
 def assign_labels_dict_numba(dict, file_path):
-    """failed attempt to speedup things even more through numba
+    """failed attempt to speedup things even more through numba.
         the main issue is that in our case we execute the call only once and
         the compilation time of numba works at its disadvantage
-
-    Parameters
-    ----------
-    dict : type
-        Description of parameter `dict`.
-    file_path : type
-        Description of parameter `file_path`.
-
-    Returns
-    -------
-    type
-        Description of returned object.
-
     """
-
     # retrive ground truth from mc
     hdu = fits.open(file_path)
     ground_truth = np.array(hdu['MONTE_CARLO'].data['ABS_Z'], dtype=np.float64)
@@ -153,19 +128,11 @@ def numba_compare(ground_truth, window, gas, gem, counter):
 def wrapper(func, *args, **kwargs):
     """wrapper to measure functions execution time through timeit.
 
-    Parameters
-    ----------
-    func : user defined function
-        Description of parameter `func`.
-    *args : type
-        Description of parameter `*args`.
-    **kwargs : type
-        Description of parameter `**kwargs`.
-
-    Returns
-    -------
-    func
-        wrapped function with no arguments needed.
+    :param function func: user defined function
+    :param type *args: `*args` of function
+    :param type **kwargs: `**kwargs` of function
+    :return: wrapped function with no arguments needed.
+    :rtype: wrapped_function
 
     """
     def wrapped():

@@ -12,17 +12,17 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../'))
+sys.path.insert(0, os.path.abspath('../../cmepda_vaselli'))
 
 
 # -- Project information -----------------------------------------------------
 
-project = 'cmepda-vaselli'
+project = 'cmepda_vaselli'
 copyright = '2021, Francesco Vaselli'
 author = 'Francesco Vaselli'
 
 # The full version, including alpha/beta/rc tags
-release = '0.7.0'
+release = '1.0.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -31,7 +31,7 @@ release = '0.7.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc'
-]
+              ]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

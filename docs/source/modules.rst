@@ -1,8 +1,7 @@
-cmepda-vaselli
+cmepda_vaselli
 ==============
 
 .. toctree::
    :maxdepth: 4
 
-   image_classification
-   tests
+   cmepda_vaselli

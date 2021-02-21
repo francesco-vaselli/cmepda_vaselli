@@ -7,17 +7,10 @@ from sklearn.metrics import roc_curve, auc
 def plot_roc(y_test, predictions):
     """utility function to compute and plot roc curves for the different classes
 
-    Parameters
-    ----------
-    y_test : np array of shape [len_test, 3]
-        truth values of test set
-    predictions : np array
-        predicted probabilities for the three classes
-
-    Returns
-    -------
-    fig plt.figure
-        graph of the three roc curves
+    :param np.array y_test: np array of shape [len_test, 3], truth values of test set
+    :param np.array predictions: predicted probabilities for the three classes
+    :return: graph of the three roc curves
+    :rtype: plt.figure
 
     """
     labels = ['window', 'gas', 'gem']
