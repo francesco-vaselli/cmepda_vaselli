@@ -9,7 +9,7 @@ from sklearn.metrics import roc_curve, auc
 import tensorflow as tf
 from cmepda_vaselli.utils.images_mapping import images_mapping
 from cmepda_vaselli.utils.plot_roc import plot_roc
-from NPRnet_model import NPRnet
+from cmepda_vaselli.NPRnet_classification.NPRnet_model import NPRnet
 
 
 if __name__ == '__main__':
@@ -18,7 +18,7 @@ if __name__ == '__main__':
     # tf.config.experimental.list_physical_devices('GPU')
 
     # load data
-    init_data = pd.read_pickle('/home/francesco/Documents/lm/cm/project/cmepda-vaselli/image_classification/im_data_flat_rnd0.pkl')
+    init_data = pd.read_pickle('/home/francesco/Documents/lm/cm/project/cmepda_vaselli/cmepda_vaselli/image_classification/im_data_flat_rnd0.pkl')
     # only select energy bin 1 (4-8.9 keV)
     bin_num = 1
     data = init_data[init_data['energy_label'] == bin_num]
