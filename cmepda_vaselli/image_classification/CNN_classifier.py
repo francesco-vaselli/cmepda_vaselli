@@ -6,8 +6,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_curve, auc
 import tensorflow as tf
 from tensorflow.keras import layers, models
-from images_mapping import images_mapping
-from plot_roc import plot_roc
+from cmepda_vaselli.utils.images_mapping import images_mapping
+from cmepda_vaselli.utils.plot_roc import plot_roc
 
 
 if __name__ == '__main__':

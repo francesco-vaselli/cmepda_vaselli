@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_curve, auc
 import tensorflow as tf
-from plot_roc import plot_roc
+from cmepda_vaselli.utils.plot_roc import plot_roc
 
 
 if __name__ == '__main__':
@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
     model.summary()
     # train
-    history = model.fit(X_train, y_train, validation_split=0.05, epochs=20)
+    history = model.fit(X_train, y_train, validation_split=0.05, epochs=2)
 
     # show loss and accuracy
     print(history.history.keys())

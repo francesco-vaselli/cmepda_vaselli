@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from image_classification.images_mapping import images_mapping
+from cmepda_vaselli.utils.images_mapping import images_mapping
 
 
 class Tests(unittest.TestCase):

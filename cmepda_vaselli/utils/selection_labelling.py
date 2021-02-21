@@ -1,3 +1,5 @@
+''' extract features from dataset
+'''
 import numpy as np
 import pandas as pd
 from astropy.io import fits
@@ -176,15 +178,14 @@ if __name__ == '__main__':
     dict = extract_features('/home/francesco/Documents/lm/cm/project/data/flat_rnd1_recon.fits')
 
     # timing of functions to compare methods
-    """
     wrap_dict = wrapper(assign_labels_dict, dict,
-    '/home/francesco/Documents/lm/cm/project/cmepda-vaselli/misc/sim_recon.fits')
+                        '/home/francesco/Documents/lm/cm/project/cmepda-vaselli/misc/sim_recon.fits')
     wrap_numba = wrapper(assign_labels_dict_numba, dict,
-    '/home/francesco/Documents/lm/cm/project/cmepda-vaselli/misc/sim_recon.fits')
-    print(timeit.timeit(wrap_dict, number=1))
-    print(timeit.timeit(wrap_numba, number=1))
-    """
+                         '/home/francesco/Documents/lm/cm/project/cmepda-vaselli/misc/sim_recon.fits')
+    print(timeit.timeit(wrap_dict, number=1000))
+    print(timeit.timeit(wrap_numba, number=1000))
 
+    # convert to df and save to csv or pickle
     df = assign_labels_dict(dict, '/home/francesco/Documents/lm/cm/project/data/flat_rnd1_recon.fits')
     print(df.info())
     df.to_csv('data_test.csv', index=False)

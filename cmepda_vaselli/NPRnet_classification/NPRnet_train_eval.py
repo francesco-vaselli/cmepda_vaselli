@@ -7,9 +7,9 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_curve, auc
 import tensorflow as tf
-from images_mapping import images_mapping
+from cmepda_vaselli.utils.images_mapping import images_mapping
+from cmepda_vaselli.utils.plot_roc import plot_roc
 from NPRnet_model import NPRnet
-from plot_roc import plot_roc
 
 
 if __name__ == '__main__':
@@ -35,8 +35,6 @@ if __name__ == '__main__':
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
 
     model = NPRnet()
-
-    # model.summary()
 
     model.compile(optimizer='adam',
                   loss=
