@@ -1,4 +1,4 @@
-cmepda\_vaselli package
+Documentation
 =======================
 
 Subpackages
