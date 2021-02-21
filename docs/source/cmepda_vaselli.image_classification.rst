@@ -12,14 +12,6 @@ cmepda\_vaselli.image\_classification.CNN\_classifier module
    :undoc-members:
    :show-inheritance:
 
-cmepda\_vaselli.image\_classification.dataset\_assembler module
----------------------------------------------------------------
-
-.. automodule:: cmepda_vaselli.image_classification.dataset_assembler
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 
