@@ -1,4 +1,4 @@
-# cmepda-vaselli
+# cmepda_vaselli
 [![Build Status](https://travis-ci.org/francesco-vaselli/cmepda-vaselli.svg?branch=main)](https://travis-ci.org/francesco-vaselli/cmepda-vaselli)
 [![Documentation Status](https://readthedocs.org/projects/cmepda-vaselli/badge/?version=latest)](https://cmepda-vaselli.readthedocs.io/en/latest/?badge=latest)
 
