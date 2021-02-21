@@ -12,14 +12,6 @@ cmepda\_vaselli.basic\_classification.NN\_classifier module
    :undoc-members:
    :show-inheritance:
 
-cmepda\_vaselli.basic\_classification.dataset\_assembler module
----------------------------------------------------------------
-
-.. automodule:: cmepda_vaselli.basic_classification.dataset_assembler
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 
