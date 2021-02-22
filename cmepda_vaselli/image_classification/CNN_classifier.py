@@ -1,3 +1,5 @@
+''' a CNN model for the classification of events
+'''
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt

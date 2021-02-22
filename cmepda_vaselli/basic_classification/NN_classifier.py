@@ -1,3 +1,5 @@
+''' a simple feedforward nn for the classification of events
+'''
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
